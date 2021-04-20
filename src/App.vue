@@ -1,30 +1,69 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view />
+          <router-view />
 </template>
 
+<script>
+    import { onBeforeMount } from 'vue'
+    import { useRouter, useRoute} from 'vue-router'
+    import firebase from 'firebase'
+
+
+export default {
+  components: {
+  },
+  setup() {
+            
+            const router = useRouter()
+            const route = useRoute()
+
+            onBeforeMount(() => {
+                firebase.auth().onAuthStateChanged((user) => {
+
+                    const path = route.path
+
+                    if (!user) {
+                        if(path == '/' || path == '/materials' || path == '/admin') router.replace(path);
+                        else router.replace('/')
+                    } else if (path == '/admin') {
+                        router.replace('/admin-panel/create-task')
+                    }
+                })
+            })
+  }
+}
+</script>
+
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+
+@import './assets/scss/_values.scss';
+
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Quicksand';
+    color: $text-color;
 }
 
-#nav {
-  padding: 30px;
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+.floating-btn {
+    display: none;
+    position: fixed;
+    background: #192841;
+    border: 2px solid $text-color;
+    border-radius: 10em;
+    color: $text-color;
+    padding: 2em;
+    right: 8%;
+    bottom: 5%;
+    cursor: pointer;
 
-    &.router-link-exact-active {
-      color: #42b983;
+    .fas {
+        font-size: 2em;
     }
-  }
 }
 </style>
