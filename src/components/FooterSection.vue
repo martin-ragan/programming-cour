@@ -2,7 +2,7 @@
     <footer>
             <div class="contact">
                 <div class="up">
-                    <h1>#MUNICHALLANGE</h1>
+                    <h1>#MUNICHALLENGE</h1>
                 </div>
                 <div class="bottom">
                     <p>vasemail@gmail.com</p>

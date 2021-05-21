@@ -14,7 +14,7 @@ var firebaseConfig = {
   const firebaseApp = firebase.initializeApp(firebaseConfig);
   firebase.analytics();
 
-  const db = firebaseApp.firestore();
+  export const db = firebaseApp.firestore();
 
 
   // export const loadTasks = (colName) => {
@@ -47,9 +47,13 @@ var firebaseConfig = {
     return users
   }
 
-  export const addUser = (user) => {
-    return db.collection('users').add(user)
-  }
+  // export const addUser = (user) => {
+  //   db.collection('users').add(user).then(() => {
+  //     return true
+  //   })
+
+  //   return false
+  // }
   export const getUser = async id  => {
       const user = await db.collection('admins').doc(id).get()
       return user.exists ? user.data() : null
